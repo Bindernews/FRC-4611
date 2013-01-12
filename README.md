@@ -22,4 +22,9 @@ http://first.wpi.edu/FRC/java/eclipse/update/
 Dublin Code from Last Year:
 https://github.com/jonbuckley33/BadRobot/tree/master/src/com/badrobots/y2012/technetium
 
+NetBeans FRC Plugin
+http://firstforge.wpi.edu/sf/frs/do/viewRelease/projects.wpilib/frs.frc_2013_java_netbeans_update.unencrypted_java_netbeans_update
+
+FRC Javadoc:
+http://wbrobotics.com/javadoc/
 
