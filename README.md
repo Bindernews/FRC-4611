@@ -28,3 +28,5 @@ http://firstforge.wpi.edu/sf/frs/do/viewRelease/projects.wpilib/frs.frc_2013_jav
 FRC Javadoc:
 http://wbrobotics.com/javadoc/
 
+NetBeans Download (You only need to download the Java SE edition, the first on the left):
+http://netbeans.org/downloads/index.html
