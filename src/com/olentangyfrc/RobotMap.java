@@ -16,4 +16,30 @@ public class RobotMap {
     // number and the module. For example you with a rangefinder:
     // public static final int rangefinderPort = 1;
     // public static final int rangefinderModule = 1;
+	public static final int
+			leftJoystick = 1,
+			rightJoystick = 2,
+			aimJoystick = 3;
+	
+	public static final int
+			aim_feedButton = 1,
+			aim_fireBtn1 = 2,
+			aim_fireBtn2 = 3,
+			aim_fireBtn3 = 4;
+	
+	public static final int
+			rightMotor1 = 1,
+			rightMotor2 = 2,
+			leftMotor1 = 3,
+			leftMotor2 = 4,
+			//,
+			feederMotor = 6,
+			elevatorMotor = 7;
+    
+    // Sensors: This is the mapping of the analog ports on the analog module
+    // to the relevant sensors.
+    public static final int
+            rangefinder = 3;
+            //elevatorPot = 4,
+            //wristPot = 2;
 }

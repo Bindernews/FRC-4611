@@ -7,7 +7,7 @@
 package com.olentangyfrc;
 
 import com.olentangyfrc.commands.CommandBase;
-import com.olentangyfrc.commands.ExampleCommand;
+//import com.olentangyfrc.commands.ExampleCommand;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -30,7 +30,7 @@ public class Ozone extends IterativeRobot {
 	 */
 	public void robotInit() {
 		// instantiate the command used for the autonomous period
-		autonomousCommand = new ExampleCommand();
+		//autonomousCommand = new ExampleCommand();
 
 		// Initialize all subsystems
 		CommandBase.init();
