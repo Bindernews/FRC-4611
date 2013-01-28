@@ -8,10 +8,10 @@ package com.olentangyfrc.commands;
  *
  * @author Bindernews
  */
-public class LeftDriveCommand extends CommandBase {
+public class ManualDriveCommand extends CommandBase {
 
-	public LeftDriveCommand() {
-		requires(leftDriveTrain);
+	public ManualDriveCommand() {
+		requires(driveTrain);
 		//throw new IllegalStateException("LeftDriveCommand should not be used");
 	}
 	
@@ -19,7 +19,7 @@ public class LeftDriveCommand extends CommandBase {
 	}
 
 	protected void execute() {
-		leftDriveTrain.setSpeed(oi.getLeftSpeed());
+		driveTrain.tankDrive();
 	}
 
 	protected boolean isFinished() {
@@ -27,6 +27,7 @@ public class LeftDriveCommand extends CommandBase {
 	}
 
 	protected void end() {
+		driveTrain.stop();
 	}
 
 	protected void interrupted() {

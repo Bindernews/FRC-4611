@@ -10,22 +10,28 @@ package com.olentangyfrc.commands;
  */
 public class ShootCommand extends CommandBase {
 	
+	private static final long SHOOT_TIME_DELAY = 2500;
+	
+	long shootTime;
+	
 	public ShootCommand() {
-		requires(elevatorSub);
+		requires(shooter);
 	}
 
 	protected void initialize() {
+		shootTime = System.currentTimeMillis();
 	}
 
 	protected void execute() {
-		
+		shooter.windUp();
 	}
 
 	protected boolean isFinished() {
-		return false;
+		return (System.currentTimeMillis() - shootTime) < SHOOT_TIME_DELAY;
 	}
 
 	protected void end() {
+		shooter.windDown();
 	}
 
 	protected void interrupted() {

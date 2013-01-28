@@ -19,8 +19,7 @@ class AimHorizontal extends CommandBase {
 	private double turnAmount = 0.0;
 
 	public AimHorizontal() {
-		requires(leftDriveTrain);
-		requires(rightDriveTrain);
+		requires(driveTrain);
 	}
 
 	protected void initialize() {
@@ -30,8 +29,8 @@ class AimHorizontal extends CommandBase {
 	protected void execute() {
 		turnSpeed = SmartDashboard.getNumber("turnSpeed");
 		turnAmount = SmartDashboard.getNumber(webcamHTurn);
-		leftDriveTrain.setSpeed(turnSpeed * turnAmount);
-		rightDriveTrain.setSpeed(turnSpeed * -turnAmount);
+		driveTrain.setLeftSpeed(turnSpeed * turnAmount);
+		driveTrain.setRightSpeed(turnSpeed * -turnAmount);
 	}
 
 	protected boolean isFinished() {
@@ -39,8 +38,7 @@ class AimHorizontal extends CommandBase {
 	}
 
 	protected void end() {
-		leftDriveTrain.setSpeed(0.0);
-		rightDriveTrain.setSpeed(0.0);
+		driveTrain.stop();
 	}
 
 	protected void interrupted() {

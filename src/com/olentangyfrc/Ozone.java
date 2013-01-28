@@ -7,6 +7,7 @@
 package com.olentangyfrc;
 
 import com.olentangyfrc.commands.CommandBase;
+import com.olentangyfrc.commands.autonomous.AutonomousCommand;
 //import com.olentangyfrc.commands.ExampleCommand;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -23,17 +24,21 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 public class Ozone extends IterativeRobot {
 
 	Command autonomousCommand;
+	Command teleopCommand;
 
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
+		OI.init();
+		
 		// instantiate the command used for the autonomous period
-		//autonomousCommand = new ExampleCommand();
+		autonomousCommand = new AutonomousCommand();
 
 		// Initialize all subsystems
 		CommandBase.init();
+		
 	}
 
 	public void autonomousInit() {
@@ -54,6 +59,7 @@ public class Ozone extends IterativeRobot {
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
 		autonomousCommand.cancel();
+		
 	}
 
 	/**

@@ -2,8 +2,8 @@ package com.olentangyfrc.commands;
 
 import com.olentangyfrc.OI;
 import com.olentangyfrc.subsystems.ElevatorSubsystem;
-import com.olentangyfrc.subsystems.LeftDriveTrain;
-import com.olentangyfrc.subsystems.RightDriveTrain;
+import com.olentangyfrc.subsystems.DriveTrain;
+import com.olentangyfrc.subsystems.Shooter;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -17,11 +17,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public abstract class CommandBase extends Command {
 
-	public static OI oi;
+	//public static OI oi;
 	// Create a single static instance of all of your subsystems
 	public static ElevatorSubsystem elevatorSub = new ElevatorSubsystem();
-	public static LeftDriveTrain leftDriveTrain = new LeftDriveTrain();
-	public static RightDriveTrain rightDriveTrain = new RightDriveTrain();
+	public static DriveTrain driveTrain = new DriveTrain();
+	public static Shooter shooter = new Shooter();
 
 	public static void init() {
 		// This MUST be here. If the OI creates Commands (which it very likely
@@ -29,12 +29,12 @@ public abstract class CommandBase extends Command {
 		// which commands extend), subsystems are not guaranteed to be
 		// yet. Thus, their requires() statements may grab null pointers. Bad
 		// news. Don't move it.
-		oi = new OI();
+		//oi = new OI();
 
 		// Show what command your subsystem is running on the SmartDashboard
 		SmartDashboard.putData(elevatorSub);
-		SmartDashboard.putData(leftDriveTrain);
-		SmartDashboard.putData(rightDriveTrain);
+		SmartDashboard.putData(driveTrain);
+		SmartDashboard.putData(shooter);
 	}
 
 	public CommandBase(String name) {

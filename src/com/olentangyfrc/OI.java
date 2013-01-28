@@ -5,8 +5,6 @@ import com.olentangyfrc.commands.AimAndShootCommand;
 import com.olentangyfrc.commands.CommandBase;
 import com.olentangyfrc.commands.ReverseDriveCommand;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.Button;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -15,44 +13,29 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class OI {
 	
-	Joystick
+	public static Joystick
 			leftJoy = new Joystick(RobotMap.leftJoystick),
 			rightJoy = new Joystick(RobotMap.rightJoystick),
 			aimJoy = new Joystick(RobotMap.aimJoystick);
 	
-	Button	fireButton1 = new JoystickButton(aimJoy, RobotMap.aim_fireBtn1),
-			fireButton2 = new JoystickButton(aimJoy, RobotMap.aim_fireBtn2),
-			fireButton3 = new JoystickButton(aimJoy, RobotMap.aim_fireBtn3);
-			
-	Button [] reverseButtons = {
-		new JoystickButton(leftJoy, RobotMap.reverseButtons[0]),
-		new JoystickButton(leftJoy, RobotMap.reverseButtons[1]),
-		new JoystickButton(rightJoy, RobotMap.reverseButtons[2]),
-		new JoystickButton(rightJoy, RobotMap.reverseButtons[3]),
-	};
+	public static JoystickMultiButton fireButtons;
+	public static JoystickMultiButton reverseButtons;
 	
-	
-	/**
-	 * Initialize values in the SmartDashboard
-	 */
-	private void initSmartDashboard() {
-		SmartDashboard.putNumber("driveSpeedMultiplier", 1.0); ///< Used to allow driving in reverse
-	}
-	
-	public OI() {
-		initSmartDashboard();
+	public static void init() {
+		// Initialzie the SmartDashboard
 		
-		AimAndShootCommand shootMeNow = new AimAndShootCommand();
-		fireButton1.whenPressed(shootMeNow);
-		fireButton2.whenPressed(shootMeNow);
-		fireButton3.whenPressed(shootMeNow);
+		// Initialize buttons
+		reverseButtons = new JoystickMultiButton(10);
+		reverseButtons.whenActive(new ReverseDriveCommand());
+		reverseButtons.add(leftJoy, RobotMap.reverseButtons[0]);
+		reverseButtons.add(leftJoy, RobotMap.reverseButtons[1]);
+		reverseButtons.add(leftJoy, RobotMap.reverseButtons[2]);
+		reverseButtons.add(leftJoy, RobotMap.reverseButtons[3]);
 		
-		CommandBase reverseDriveCommand = new ReverseDriveCommand();
-		for(int i=0; i<reverseButtons.length; i++) {
-			reverseButtons[i].whenPressed(reverseDriveCommand);
-		}
+		fireButtons = new JoystickMultiButton(10);
+		fireButtons.whenActive(new AimAndShootCommand());
+		fireButtons.add(leftJoy, RobotMap.aim_fireBtn1);
 	}
-	
 	
 	private static final double JOYSTICK_DEADZONE = 0.1;
 	public static double speedf(double spd) {
@@ -62,15 +45,15 @@ public class OI {
 		return spd;
 	}
 	
-	public double getLeftSpeed() {
-		return speedf(leftJoy.getY())
-				* SmartDashboard.getNumber("driveSpeedMultiplier");
+	public static double getLeftY() {
+		return speedf(leftJoy.getY());
 	}
 
-	public double getRightSpeed() {
-		return speedf(rightJoy.getY())
-				* SmartDashboard.getNumber("driveSpeedMultiplier");
+	public static double getRightY() {
+		return speedf(rightJoy.getY());
 	}
+	
+	private OI() {}
 	
     //// CREATING BUTTONS
     // One type of button is a joystick button which is any button on a joystick.

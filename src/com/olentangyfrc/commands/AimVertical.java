@@ -35,6 +35,7 @@ class AimVertical extends CommandBase {
 	}
 
 	protected void end() {
+		elevatorSub.setSpeed(0.0);
 	}
 
 	protected void interrupted() {

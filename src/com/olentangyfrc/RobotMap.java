@@ -34,7 +34,7 @@ public class RobotMap {
 			rightMotor2 = 2,
 			leftMotor1 = 3,
 			leftMotor2 = 4,
-			//,
+			shooterMotor = 5,
 			feederMotor = 6,
 			elevatorMotor = 7;
     

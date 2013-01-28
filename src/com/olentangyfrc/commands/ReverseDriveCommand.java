@@ -21,9 +21,7 @@ public class ReverseDriveCommand extends CommandBase {
 	}
 
 	protected void execute() {
-		double speedMult = SmartDashboard.getNumber("driveSpeedMultiplier");
-		speedMult *= -1;
-		SmartDashboard.putNumber("driveSpeedMultiplier", speedMult);
+		driveTrain.reverseDrive();
 	}
 
 	protected boolean isFinished() {
