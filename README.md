@@ -13,12 +13,6 @@ Links
 http://firstforge.wpi.edu/sf/docman/do/downloadDocument/projects.wpilib/docman.root.c_and_java_documentation/doc1199
 http://firstforge.wpi.edu/sf/docman/do/downloadDocument/projects.wpilib/docman.root.c_and_java_documentation/doc1303
 
-Eclipse FRC Plugin (unstable)
-http://first.wpi.edu/FRC/java/eclipse/unstable/
-
-Eclipse FRC Plugin (update)
-http://first.wpi.edu/FRC/java/eclipse/update/
-
 Dublin Code from Last Year:
 https://github.com/jonbuckley33/BadRobot/tree/master/src/com/badrobots/y2012/technetium
 
@@ -26,7 +20,8 @@ NetBeans FRC Plugin
 http://firstforge.wpi.edu/sf/frs/do/viewRelease/projects.wpilib/frs.frc_2013_java_netbeans_update.unencrypted_java_netbeans_update
 
 FRC Javadoc:
-http://wbrobotics.com/javadoc/
+<home_directory>/sunspotfrcsdk/doc/javadoc/index.html
+The home directory for Windows users is C:\Users\<username>\, for Linux users it would be /home/<username>/
 
 NetBeans Download (You only need to download the Java SE edition, the first on the left):
 http://netbeans.org/downloads/index.html
