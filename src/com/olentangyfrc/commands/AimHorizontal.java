@@ -39,6 +39,8 @@ class AimHorizontal extends CommandBase {
 	}
 
 	protected void end() {
+		leftDriveTrain.setSpeed(0.0);
+		rightDriveTrain.setSpeed(0.0);
 	}
 
 	protected void interrupted() {

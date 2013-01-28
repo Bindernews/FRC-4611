@@ -56,7 +56,7 @@ public class OI {
 	
 	private static final double JOYSTICK_DEADZONE = 0.1;
 	public static double speedf(double spd) {
-		if (spd < JOYSTICK_DEADZONE) {
+		if (Math.abs(spd) < JOYSTICK_DEADZONE) {
 			return 0;
 		}
 		return spd;
