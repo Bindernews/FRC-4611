@@ -10,14 +10,20 @@ package com.olentangyfrc.commands;
  */
 public class LeftDriveCommand extends CommandBase {
 
+	public LeftDriveCommand() {
+		requires(leftDriveTrain);
+		//throw new IllegalStateException("LeftDriveCommand should not be used");
+	}
+	
 	protected void initialize() {
 	}
 
 	protected void execute() {
+		leftDriveTrain.setSpeed(oi.getLeftSpeed());
 	}
 
 	protected boolean isFinished() {
-		return true;
+		return false;
 	}
 
 	protected void end() {

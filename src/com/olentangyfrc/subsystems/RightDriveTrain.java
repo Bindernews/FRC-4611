@@ -28,4 +28,9 @@ public class RightDriveTrain extends Subsystem {
 		setDefaultCommand(new RightDriveCommand());
 	}
 	
+	public void setSpeed(double speed) {
+		motor1.set(speed);
+		motor2.set(speed);
+	}
+	
 }

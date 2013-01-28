@@ -2,9 +2,12 @@
 package com.olentangyfrc;
 
 import com.olentangyfrc.commands.AimAndShootCommand;
+import com.olentangyfrc.commands.CommandBase;
+import com.olentangyfrc.commands.ReverseDriveCommand;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -20,13 +23,53 @@ public class OI {
 	Button	fireButton1 = new JoystickButton(aimJoy, RobotMap.aim_fireBtn1),
 			fireButton2 = new JoystickButton(aimJoy, RobotMap.aim_fireBtn2),
 			fireButton3 = new JoystickButton(aimJoy, RobotMap.aim_fireBtn3);
+			
+	Button [] reverseButtons = {
+		new JoystickButton(leftJoy, RobotMap.reverseButtons[0]),
+		new JoystickButton(leftJoy, RobotMap.reverseButtons[1]),
+		new JoystickButton(rightJoy, RobotMap.reverseButtons[2]),
+		new JoystickButton(rightJoy, RobotMap.reverseButtons[3]),
+	};
 	
+	
+	/**
+	 * Initialize values in the SmartDashboard
+	 */
+	private void initSmartDashboard() {
+		SmartDashboard.putNumber("driveSpeedMultiplier", 1.0); ///< Used to allow driving in reverse
+	}
 	
 	public OI() {
+		initSmartDashboard();
+		
 		AimAndShootCommand shootMeNow = new AimAndShootCommand();
 		fireButton1.whenPressed(shootMeNow);
 		fireButton2.whenPressed(shootMeNow);
 		fireButton3.whenPressed(shootMeNow);
+		
+		CommandBase reverseDriveCommand = new ReverseDriveCommand();
+		for(int i=0; i<reverseButtons.length; i++) {
+			reverseButtons[i].whenPressed(reverseDriveCommand);
+		}
+	}
+	
+	
+	private static final double JOYSTICK_DEADZONE = 0.1;
+	public static double speedf(double spd) {
+		if (spd < JOYSTICK_DEADZONE) {
+			return 0;
+		}
+		return spd;
+	}
+	
+	public double getLeftSpeed() {
+		return speedf(leftJoy.getY())
+				* SmartDashboard.getNumber("driveSpeedMultiplier");
+	}
+
+	public double getRightSpeed() {
+		return speedf(rightJoy.getY())
+				* SmartDashboard.getNumber("driveSpeedMultiplier");
 	}
 	
     //// CREATING BUTTONS

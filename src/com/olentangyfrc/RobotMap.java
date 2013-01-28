@@ -27,6 +27,8 @@ public class RobotMap {
 			aim_fireBtn2 = 3,
 			aim_fireBtn3 = 4;
 	
+	public static final int [] reverseButtons = { 1, 2, 3, 4 };
+	
 	public static final int
 			rightMotor1 = 1,
 			rightMotor2 = 2,

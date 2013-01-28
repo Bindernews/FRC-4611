@@ -4,24 +4,26 @@
  */
 package com.olentangyfrc.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 /**
  *
  * @author Bindernews
  */
-public class RightDriveCommand extends CommandBase {
+public class ReverseDriveCommand extends CommandBase {
 	
-	private double speed;
-	
-	public RightDriveCommand() {
-		requires(rightDriveTrain);
-		throw new IllegalStateException("RightDriveCommand should not be used");
+	public ReverseDriveCommand() {
+		
 	}
 
 	protected void initialize() {
+		
 	}
 
 	protected void execute() {
-		rightDriveTrain.setSpeed(oi.getRightSpeed());
+		double speedMult = SmartDashboard.getNumber("driveSpeedMultiplier");
+		speedMult *= -1;
+		SmartDashboard.putNumber("driveSpeedMultiplier", speedMult);
 	}
 
 	protected boolean isFinished() {
@@ -32,11 +34,6 @@ public class RightDriveCommand extends CommandBase {
 	}
 
 	protected void interrupted() {
-	}
-	
-	public void setSpeed(double spd) {
-		speed = spd;
-		rightDriveTrain.setSpeed(spd);
 	}
 	
 }

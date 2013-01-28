@@ -26,6 +26,8 @@ public class ElevatorSubsystem extends Subsystem {
 	protected void initDefaultCommand() {
 	}
 	
-	
+	public void setSpeed(double spd) {
+		elevatorMotor.set(spd);
+	}
 	
 }
