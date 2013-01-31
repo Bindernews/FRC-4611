@@ -4,28 +4,33 @@
  */
 package com.olentangyfrc.commands;
 
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.tables.ITable;
+import edu.wpi.first.wpilibj.tables.ITableListener;
 
 /**
  *
  * @author Bindernews
  */
-class AimVertical extends CommandBase {
+public class AimVertical extends CommandBase implements ITableListener {
 
+	public static final String turnAmountName = "vertical";
+	
 	private double turnSpeed = 0.1;
 	private double turnAmount = 0.0;
 	
 	public AimVertical() {
 		requires(elevatorSub);
+		NetworkTable.getTable("SmartDashboard").addTableListener(this);
 	}
 
 	protected void initialize() {
 		SmartDashboard.putNumber("turnSpeedV", turnSpeed);
-		SmartDashboard.putNumber("turnAmountV", turnAmount);
+		SmartDashboard.putNumber(turnAmountName, turnAmount);
 	}
 
 	protected void execute() {
-		turnSpeed = SmartDashboard.getNumber("turnSpeedV");
 		turnAmount = SmartDashboard.getNumber("turnAmountV");
 		elevatorSub.setSpeed(turnSpeed * turnAmount);
 	}
@@ -39,6 +44,13 @@ class AimVertical extends CommandBase {
 	}
 
 	protected void interrupted() {
+		end();
+	}
+
+	public void valueChanged(ITable table, String name, Object obj, boolean changed) {
+		if (name.equals("turnSpeedV")) {
+			turnSpeed = table.getNumber("turnSpeedV");
+		}
 	}
 	
 }

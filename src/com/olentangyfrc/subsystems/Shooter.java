@@ -30,6 +30,7 @@ public class Shooter extends Subsystem {
 	}
 
 	protected void initDefaultCommand() {
+		// no default command needed because command is run by Buttons
 	}
 	
 }

@@ -12,7 +12,6 @@ public class ManualDriveCommand extends CommandBase {
 
 	public ManualDriveCommand() {
 		requires(driveTrain);
-		//throw new IllegalStateException("LeftDriveCommand should not be used");
 	}
 	
 	protected void initialize() {

@@ -19,7 +19,8 @@ public class RobotMap {
 	public static final int
 			leftJoystick = 1,
 			rightJoystick = 2,
-			aimJoystick = 3;
+			aimJoystick = 3,
+			N64Joystick = 4;
 	
 	public static final int
 			aim_feedButton = 1,

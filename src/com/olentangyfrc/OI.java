@@ -16,25 +16,30 @@ public class OI {
 	public static Joystick
 			leftJoy = new Joystick(RobotMap.leftJoystick),
 			rightJoy = new Joystick(RobotMap.rightJoystick),
-			aimJoy = new Joystick(RobotMap.aimJoystick);
+			aimJoy = new Joystick(RobotMap.aimJoystick),
+			n64 = new Joystick(RobotMap.N64Joystick);
 	
-	public static JoystickMultiButton fireButtons;
-	public static JoystickMultiButton reverseButtons;
+	public static NamedMultiButton fireButtons;
+	public static NamedMultiButton reverseButtons;
 	
 	public static void init() {
-		// Initialzie the SmartDashboard
 		
 		// Initialize buttons
-		reverseButtons = new JoystickMultiButton(10);
+		reverseButtons = new NamedMultiButton("ReverseButton", 10);
 		reverseButtons.whenActive(new ReverseDriveCommand());
-		reverseButtons.add(leftJoy, RobotMap.reverseButtons[0]);
-		reverseButtons.add(leftJoy, RobotMap.reverseButtons[1]);
-		reverseButtons.add(leftJoy, RobotMap.reverseButtons[2]);
-		reverseButtons.add(leftJoy, RobotMap.reverseButtons[3]);
+		reverseButtons.add(leftJoy, 1);
+		reverseButtons.add(rightJoy, 2);
+		reverseButtons.add(n64, 3);
 		
-		fireButtons = new JoystickMultiButton(10);
+		fireButtons = new NamedMultiButton("FireButton", 10);
 		fireButtons.whenActive(new AimAndShootCommand());
 		fireButtons.add(leftJoy, RobotMap.aim_fireBtn1);
+		fireButtons.add(rightJoy, 1);
+		fireButtons.add(n64, 2);
+		
+		// Initialzie the SmartDashboard
+		SmartDashboard.putData(reverseButtons);
+		SmartDashboard.putData(fireButtons);
 	}
 	
 	private static final double JOYSTICK_DEADZONE = 0.1;

@@ -4,30 +4,32 @@
  */
 package com.olentangyfrc.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.tables.ITable;
+import edu.wpi.first.wpilibj.tables.ITableListener;
 
 /**
  *
  * @author Bindernews
  */
-class AimHorizontal extends CommandBase {
+public class AimHorizontal extends CommandBase implements ITableListener {
 	
-	public static final String webcamHTurn = "webcamHTurn";
+	public static final String webcamHTurn = "horizontal";
 	
 	private double turnSpeed = 0.1;
 	private double turnAmount = 0.0;
 
 	public AimHorizontal() {
 		requires(driveTrain);
+		NetworkTable.getTable("SmartDashboard").addTableListener(this);
 	}
 
 	protected void initialize() {
-		SmartDashboard.putNumber("turnSpeed", turnSpeed);
+		SmartDashboard.putNumber("turnSpeedH", turnSpeed);
 	}
 
 	protected void execute() {
-		turnSpeed = SmartDashboard.getNumber("turnSpeed");
 		turnAmount = SmartDashboard.getNumber(webcamHTurn);
 		driveTrain.setLeftSpeed(turnSpeed * turnAmount);
 		driveTrain.setRightSpeed(turnSpeed * -turnAmount);
@@ -42,6 +44,13 @@ class AimHorizontal extends CommandBase {
 	}
 
 	protected void interrupted() {
+		end();
+	}
+
+	public void valueChanged(ITable table, String name, Object obj, boolean changed) {
+		if (name.equals("turnSpeedH")) {
+			turnSpeed = table.getNumber("turnSpeedH");
+		}
 	}
 	
 }

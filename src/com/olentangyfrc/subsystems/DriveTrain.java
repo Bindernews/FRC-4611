@@ -28,6 +28,15 @@ public class DriveTrain extends Subsystem {
 		leftMotor2 = new Victor(RobotMap.leftMotor2);
 		rightMotor1 = new Victor(RobotMap.rightMotor1);
 		rightMotor2 = new Victor(RobotMap.rightMotor2);
+		
+		setSafety(true);
+	}
+	
+	public void setSafety(boolean safe) {
+		leftMotor1.setSafetyEnabled(safe);
+		leftMotor2.setSafetyEnabled(safe);
+		rightMotor1.setSafetyEnabled(safe);
+		rightMotor2.setSafetyEnabled(safe);
 	}
 	
 	public void tankDrive() {
