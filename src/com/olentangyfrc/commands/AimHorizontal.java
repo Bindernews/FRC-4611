@@ -21,12 +21,12 @@ public class AimHorizontal extends CommandBase implements ITableListener {
 	private double turnAmount = 0.0;
 
 	public AimHorizontal() {
+		super("AimHorizontal");
 		requires(driveTrain);
-		NetworkTable.getTable("SmartDashboard").addTableListener(this);
+		SmartDashboard.putData(this);
 	}
 
 	protected void initialize() {
-		SmartDashboard.putNumber("turnSpeedH", turnSpeed);
 	}
 
 	protected void execute() {
@@ -45,6 +45,12 @@ public class AimHorizontal extends CommandBase implements ITableListener {
 
 	protected void interrupted() {
 		end();
+	}
+	
+	public void initTable(ITable table) {
+		super.initTable(table);
+		table.putNumber("turnSpeedH", turnSpeed);
+		table.addTableListener(this);
 	}
 
 	public void valueChanged(ITable table, String name, Object obj, boolean changed) {

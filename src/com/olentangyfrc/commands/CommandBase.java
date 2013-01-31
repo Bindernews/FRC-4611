@@ -1,7 +1,7 @@
 package com.olentangyfrc.commands;
 
 import com.olentangyfrc.OI;
-import com.olentangyfrc.subsystems.ElevatorSubsystem;
+import com.olentangyfrc.subsystems.Elevator;
 import com.olentangyfrc.subsystems.DriveTrain;
 import com.olentangyfrc.subsystems.Shooter;
 import edu.wpi.first.wpilibj.command.Command;
@@ -19,7 +19,7 @@ public abstract class CommandBase extends Command {
 
 	//public static OI oi;
 	// Create a single static instance of all of your subsystems
-	public static ElevatorSubsystem elevatorSub = new ElevatorSubsystem();
+	public static Elevator elevatorSub = new Elevator();
 	public static DriveTrain driveTrain = new DriveTrain();
 	public static Shooter shooter = new Shooter();
 

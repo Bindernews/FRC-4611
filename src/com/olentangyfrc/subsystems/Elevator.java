@@ -13,11 +13,11 @@ import edu.wpi.first.wpilibj.command.PIDSubsystem;
  *
  * @author Bindernews
  */
-public class ElevatorSubsystem extends Subsystem {
+public class Elevator extends Subsystem {
 	
 	private Victor elevatorMotor;
 	
-	public ElevatorSubsystem() {
+	public Elevator() {
 		super("Elevator");
 		
 		elevatorMotor = new Victor(RobotMap.elevatorMotor);

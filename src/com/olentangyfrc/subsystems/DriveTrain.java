@@ -32,7 +32,7 @@ public class DriveTrain extends Subsystem {
 		setSafety(true);
 	}
 	
-	public void setSafety(boolean safe) {
+	public final void setSafety(boolean safe) {
 		leftMotor1.setSafetyEnabled(safe);
 		leftMotor2.setSafetyEnabled(safe);
 		rightMotor1.setSafetyEnabled(safe);
