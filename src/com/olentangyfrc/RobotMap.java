@@ -20,17 +20,19 @@ public class RobotMap {
 			leftJoystick = 1,
 			rightJoystick = 2,
 			aimJoystick = 3,
-			N64Joystick = 4;
+			N64Joystick = 4,
 	
-	public static final int
+			ArrowAxisLR = 6,
+			ArrowAxisUD = 5,
+	
+			btnGiveAimControl = 6,
+			btnGiveJoysControl = 5,
+			
 			aim_feedButton = 1,
 			aim_fireBtn1 = 2,
 			aim_fireBtn2 = 3,
-			aim_fireBtn3 = 4;
-	
-	public static final int [] reverseButtons = { 1, 2, 3, 4 };
-	
-	public static final int
+			aim_fireBtn3 = 4,
+			
 			rightMotor1 = 1,
 			rightMotor2 = 2,
 			leftMotor1 = 3,
@@ -38,6 +40,10 @@ public class RobotMap {
 			shooterMotor = 5,
 			feederMotor = 6,
 			elevatorMotor = 7;
+	
+	
+	
+	public static final int [] reverseButtons = { 1, 2, 3, 4 };
     
     // Sensors: This is the mapping of the analog ports on the analog module
     // to the relevant sensors.

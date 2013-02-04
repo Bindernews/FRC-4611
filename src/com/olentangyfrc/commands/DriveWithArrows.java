@@ -4,27 +4,31 @@
  */
 package com.olentangyfrc.commands;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import com.olentangyfrc.OI;
 
 /**
  *
  * @author Bindernews
  */
-public class ReverseDriveCommand extends CommandBase {
+public class DriveWithArrows extends DrivingCommand {
 	
-	public ReverseDriveCommand() {
-		
+	public DriveWithArrows() {
+		super("Drive With Arrow Keys");
+		requires(driveTrain);
 	}
 
 	protected void initialize() {
-		driveTrain.reverseDrive();
+		driveLock();
 	}
 
 	protected void execute() {
+		if (!driveEnabled()) { return; }
+		driveTrain.tankDrive(OI.getArrowUD(), OI.getArrowUD());
+		driveTrain.turn(OI.getArrowLR());
 	}
 
 	protected boolean isFinished() {
-		return true;
+		return false;
 	}
 
 	protected void end() {

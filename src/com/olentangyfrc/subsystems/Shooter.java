@@ -5,8 +5,10 @@
 package com.olentangyfrc.subsystems;
 
 import com.olentangyfrc.RobotMap;
+import com.olentangyfrc.utils.DashUtils;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.tables.ITable;
 import edu.wpi.first.wpilibj.tables.ITableListener;
 
@@ -17,19 +19,18 @@ import edu.wpi.first.wpilibj.tables.ITableListener;
 public class Shooter extends Subsystem implements ITableListener {
 	
 	private static double SHOOTER_SPEED = 10.0;
-	private static double REVERSE_SPEED = 1.0;
+	private static double FEEDER_SPEED = 10.0;
 	private Victor shooterMotor;
+	private Victor feeder;
 	
 	public Shooter() {
 		super("Shooter");
 		shooterMotor = new Victor(RobotMap.shooterMotor);
-	}
-	
-	public void initTable(ITable table) {
-		super.initTable(table);
-		table.putNumber("SHOOTER_SPEED", SHOOTER_SPEED);
-		table.putNumber("REVERSE_SPEED", REVERSE_SPEED);
-		table.addTableListener(this);
+		feeder = new Victor(RobotMap.feederMotor);
+		SmartDashboard.putNumber("SHOOTER_SPEED", SHOOTER_SPEED);
+		SmartDashboard.putNumber("FEEDER_SPEED", FEEDER_SPEED);
+		DashUtils.addListener("SHOOTER_SPEED", this);
+		DashUtils.addListener("FEEDER_SPEED", this);
 	}
 	
 	public void windUp() {
@@ -40,8 +41,12 @@ public class Shooter extends Subsystem implements ITableListener {
 		shooterMotor.set(0.0);
 	}
 	
-	public void runReverse() {
-		shooterMotor.set(REVERSE_SPEED);
+	public void feederOn() {
+		feeder.set(FEEDER_SPEED);
+	}
+	
+	public void feederOff() {
+		feeder.set(0.0);
 	}
 
 	protected void initDefaultCommand() {
@@ -49,12 +54,8 @@ public class Shooter extends Subsystem implements ITableListener {
 	}
 
 	public void valueChanged(ITable table, String name, Object obj, boolean bln) {
-		if (name.equals("SHOOTER_SPEED")) {
-			SHOOTER_SPEED = table.getNumber("SHOOTER_SPEED");
-		}
-		if (name.equals("REVERSE_SPEED")) {
-			REVERSE_SPEED = table.getNumber("REVERSE_SPEED");
-		}
+		SHOOTER_SPEED = SmartDashboard.getNumber("SHOOTER_SPEED");
+		FEEDER_SPEED = SmartDashboard.getNumber("FEEDER_SPEED");
 	}
 	
 }

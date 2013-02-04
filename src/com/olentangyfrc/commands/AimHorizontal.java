@@ -4,7 +4,7 @@
  */
 package com.olentangyfrc.commands;
 
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import com.olentangyfrc.utils.DashUtils;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.tables.ITable;
 import edu.wpi.first.wpilibj.tables.ITableListener;
@@ -13,26 +13,31 @@ import edu.wpi.first.wpilibj.tables.ITableListener;
  *
  * @author Bindernews
  */
-public class AimHorizontal extends CommandBase implements ITableListener {
+public class AimHorizontal extends DrivingCommand implements ITableListener {
 	
 	public static final String webcamHTurn = "horizontal";
 	
 	private double turnSpeed = 0.1;
 	private double turnAmount = 0.0;
+	
+	public boolean isEnabled = false;
 
 	public AimHorizontal() {
 		super("AimHorizontal");
-		requires(driveTrain);
-		SmartDashboard.putData(this);
 	}
 
 	protected void initialize() {
+		SmartDashboard.putNumber("turnSpeedH", turnSpeed);
+		DashUtils.addListener("turnSpeedH", this);
+		
+		SmartDashboard.putData(this);
+		isEnabled = true;
 	}
 
 	protected void execute() {
+		if (!driveEnabled()) { return; }
 		turnAmount = SmartDashboard.getNumber(webcamHTurn);
-		driveTrain.setLeftSpeed(turnSpeed * turnAmount);
-		driveTrain.setRightSpeed(turnSpeed * -turnAmount);
+		driveTrain.tankDrive(turnSpeed * turnAmount, turnSpeed * -turnAmount);
 	}
 
 	protected boolean isFinished() {
@@ -41,22 +46,15 @@ public class AimHorizontal extends CommandBase implements ITableListener {
 
 	protected void end() {
 		driveTrain.stop();
+		isEnabled = false;
 	}
 
 	protected void interrupted() {
 		end();
 	}
-	
-	public void initTable(ITable table) {
-		super.initTable(table);
-		table.putNumber("turnSpeedH", turnSpeed);
-		table.addTableListener(this);
-	}
 
 	public void valueChanged(ITable table, String name, Object obj, boolean changed) {
-		if (name.equals("turnSpeedH")) {
-			turnSpeed = table.getNumber("turnSpeedH");
-		}
+		turnSpeed = table.getNumber("turnSpeedH");
 	}
 	
 }

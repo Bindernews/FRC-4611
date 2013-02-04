@@ -5,8 +5,9 @@
 package com.olentangyfrc.subsystems;
 
 import com.olentangyfrc.OI;
+import edu.wpi.first.wpilibj.RobotDrive;
 import com.olentangyfrc.RobotMap;
-import com.olentangyfrc.commands.ManualDriveCommand;
+import com.olentangyfrc.commands.DriveWithJoysticks;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -16,57 +17,48 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class DriveTrain extends Subsystem {
 
-	private Victor leftMotor1;
-	private Victor leftMotor2;
-	private Victor rightMotor1;
-	private Victor rightMotor2;
+	private Victor leftMotorFront;
+	private Victor leftMotorRear;
+	private Victor rightMotorFront;
+	private Victor rightMotorRear;
+	private RobotDrive drive;
 	private double driveOrientation = 1.0;
 	
 	public DriveTrain() {
 		super("Drive Train");
-		leftMotor1 = new Victor(RobotMap.leftMotor1);
-		leftMotor2 = new Victor(RobotMap.leftMotor2);
-		rightMotor1 = new Victor(RobotMap.rightMotor1);
-		rightMotor2 = new Victor(RobotMap.rightMotor2);
+		leftMotorFront = new Victor(RobotMap.leftMotor1);
+		leftMotorRear = new Victor(RobotMap.leftMotor2);
+		rightMotorFront = new Victor(RobotMap.rightMotor1);
+		rightMotorRear = new Victor(RobotMap.rightMotor2);
 		
-		setSafety(true);
+		drive = new RobotDrive(leftMotorFront, leftMotorRear, rightMotorFront, rightMotorRear);
+		drive.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, true);
+		drive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);
+		drive.setSafetyEnabled(true);
 	}
 	
-	public final void setSafety(boolean safe) {
-		leftMotor1.setSafetyEnabled(safe);
-		leftMotor2.setSafetyEnabled(safe);
-		rightMotor1.setSafetyEnabled(safe);
-		rightMotor2.setSafetyEnabled(safe);
-	}
-	
-	public void tankDrive() {
-		setLeftSpeed(OI.getLeftY());
-		setRightSpeed(OI.getRightY());
+	public void tankDrive(double left, double right) {
+		drive.tankDrive(left * driveOrientation, right * driveOrientation);
 	}
 	
 	public void reverseDrive() {
 		driveOrientation *= -1;
 	}
 	
+	public void setForwardDrive() {
+		driveOrientation = 1;
+	}
+	
 	public void stop() {
-		setLeftSpeed(0.0);
-		setRightSpeed(0.0);
+		drive.tankDrive(0, 0);
+	}
+	
+	public void turn(double speed) {
+		tankDrive(-speed, speed);
 	}
 	
 	protected void initDefaultCommand() {
-		setDefaultCommand(new ManualDriveCommand());
-	}
-	
-	public void setLeftSpeed(double speed) {
-		speed *= driveOrientation;
-		leftMotor1.set(speed);
-		leftMotor2.set(speed);
-	}
-	
-	public void setRightSpeed(double speed) {
-		speed *= driveOrientation;
-		rightMotor1.set(speed);
-		rightMotor2.set(speed);
+		setDefaultCommand(new DriveWithJoysticks());
 	}
 	
 }

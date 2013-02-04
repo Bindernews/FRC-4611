@@ -6,7 +6,11 @@
 /*----------------------------------------------------------------------------*/
 package com.olentangyfrc;
 
+import com.olentangyfrc.commands.AimHorizontal;
 import com.olentangyfrc.commands.CommandBase;
+import com.olentangyfrc.commands.DriveWithArrows;
+import com.olentangyfrc.commands.DriveWithJoysticks;
+import com.olentangyfrc.commands.ManualAimCommand;
 import com.olentangyfrc.commands.autonomous.AutonomousCommand;
 //import com.olentangyfrc.commands.ExampleCommand;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -23,8 +27,13 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  */
 public class Ozone extends IterativeRobot {
 
+	public static DriveWithJoysticks driveWithJoys;
+	public static DriveWithArrows driveWithArrows;
+	public static AimHorizontal aimHorizontal;
+	public static ManualAimCommand manualAim;
+	
 	Command autonomousCommand;
-	Command teleopCommand;
+	
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -38,6 +47,9 @@ public class Ozone extends IterativeRobot {
 
 		// Initialize all subsystems
 		CommandBase.init();
+	}
+	
+	public void disabledInit() {
 		
 	}
 

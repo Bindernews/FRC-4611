@@ -4,6 +4,7 @@
  */
 package com.olentangyfrc.commands;
 
+import com.olentangyfrc.utils.DashUtils;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.tables.ITable;
@@ -22,11 +23,12 @@ public class AimVertical extends CommandBase implements ITableListener {
 	
 	public AimVertical() {
 		requires(elevatorSub);
-		NetworkTable.getTable("SmartDashboard").addTableListener(this);
 	}
 
 	protected void initialize() {
 		SmartDashboard.putNumber("turnSpeedV", turnSpeed);
+		DashUtils.addListener("turnSpeedV", this);
+		
 		SmartDashboard.putNumber(turnAmountName, turnAmount);
 	}
 
@@ -48,9 +50,7 @@ public class AimVertical extends CommandBase implements ITableListener {
 	}
 
 	public void valueChanged(ITable table, String name, Object obj, boolean changed) {
-		if (name.equals("turnSpeedV")) {
-			turnSpeed = table.getNumber("turnSpeedV");
-		}
+		turnSpeed = table.getNumber("turnSpeedV");
 	}
 	
 }

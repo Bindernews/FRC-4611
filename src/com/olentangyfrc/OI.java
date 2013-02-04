@@ -2,8 +2,9 @@
 package com.olentangyfrc;
 
 import com.olentangyfrc.commands.AimAndShootCommand;
-import com.olentangyfrc.commands.CommandBase;
 import com.olentangyfrc.commands.ReverseDriveCommand;
+import com.olentangyfrc.utils.NamedMultiButton;
+import com.sun.squawk.util.MathUtils;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -16,46 +17,71 @@ public class OI {
 	public static Joystick
 			leftJoy = new Joystick(RobotMap.leftJoystick),
 			rightJoy = new Joystick(RobotMap.rightJoystick),
-			aimJoy = new Joystick(RobotMap.aimJoystick),
 			n64 = new Joystick(RobotMap.N64Joystick);
 	
-	public static NamedMultiButton fireButtons;
-	public static NamedMultiButton reverseButtons;
+	public static NamedMultiButton
+			btnGiveAimControl,
+			btnGiveJoysControl,
+			btnFire,
+			btnReverseDrive;
 	
 	public static void init() {
 		
 		// Initialize buttons
-		reverseButtons = new NamedMultiButton("ReverseButton", 10);
-		reverseButtons.whenActive(new ReverseDriveCommand());
-		reverseButtons.add(leftJoy, 1);
-		reverseButtons.add(rightJoy, 2);
-		reverseButtons.add(n64, 3);
+		btnReverseDrive = new NamedMultiButton("ReverseButton", 10);
+		btnReverseDrive.whenActive(new ReverseDriveCommand());
+		btnReverseDrive.add(leftJoy, 1);
+		btnReverseDrive.add(rightJoy, 2);
+		btnReverseDrive.add(n64, 3);
 		
-		fireButtons = new NamedMultiButton("FireButton", 10);
-		fireButtons.whenActive(new AimAndShootCommand());
-		fireButtons.add(leftJoy, RobotMap.aim_fireBtn1);
-		fireButtons.add(rightJoy, 1);
-		fireButtons.add(n64, 2);
+		btnFire = new NamedMultiButton("FireButton", 10);
+		btnFire.whenActive(new AimAndShootCommand());
+		btnFire.add(leftJoy, RobotMap.aim_fireBtn1);
+		btnFire.add(rightJoy, 1);
+		btnFire.add(n64, 2);
+		
+		btnGiveAimControl = new NamedMultiButton("Enable Aiming", 10);
+		btnGiveAimControl.whenActive(Ozone.manualAim.driveLockCommand);
+		btnGiveAimControl.add(n64, RobotMap.btnGiveAimControl);
+		
+		btnGiveJoysControl = new NamedMultiButton("Enable Joysticks", 10);
+		btnGiveJoysControl.whenActive(Ozone.driveWithJoys.driveLockCommand);
+		btnGiveJoysControl.add(n64, RobotMap.btnGiveJoysControl);
 		
 		// Initialzie the SmartDashboard
-		SmartDashboard.putData(reverseButtons);
-		SmartDashboard.putData(fireButtons);
+		SmartDashboard.putData(btnReverseDrive);
+		SmartDashboard.putData(btnFire);
 	}
 	
-	private static final double JOYSTICK_DEADZONE = 0.1;
+	private static final double JOYSTICK_DEADZONE = 0.05;
 	public static double speedf(double spd) {
-		if (Math.abs(spd) < JOYSTICK_DEADZONE) {
+		double sign = spd / Math.abs(spd);
+		double val = Math.abs(MathUtils.pow(spd, 1.5));
+		if (val < JOYSTICK_DEADZONE) {
 			return 0;
 		}
-		return spd;
+		return val * sign;
 	}
 	
-	public static double getLeftY() {
+	public static double getLeftJoy() {
 		return speedf(leftJoy.getY());
 	}
-
-	public static double getRightY() {
+	public static double getRightJoy() {
 		return speedf(rightJoy.getY());
+	}
+	
+	public static double getN64H() {
+		return speedf(n64.getX());
+	}
+	public static double getN64V() {
+		return speedf(n64.getY());
+	}
+	
+	public static double getArrowLR() {
+		return speedf(n64.getRawAxis(RobotMap.ArrowAxisLR));
+	}
+	public static double getArrowUD() {
+		return speedf(n64.getRawAxis(RobotMap.ArrowAxisUD));
 	}
 	
 	private OI() {}

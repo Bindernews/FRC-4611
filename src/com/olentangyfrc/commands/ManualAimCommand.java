@@ -8,17 +8,16 @@ package com.olentangyfrc.commands;
  *
  * @author Bindernews
  */
-public class ManualDriveCommand extends CommandBase {
+public class ManualAimCommand extends DrivingCommand {
 
-	public ManualDriveCommand() {
-		requires(driveTrain);
+	public ManualAimCommand() {
+		super("Manual Aim Command");
 	}
 	
 	protected void initialize() {
 	}
 
 	protected void execute() {
-		driveTrain.tankDrive();
 	}
 
 	protected boolean isFinished() {
@@ -26,7 +25,6 @@ public class ManualDriveCommand extends CommandBase {
 	}
 
 	protected void end() {
-		driveTrain.stop();
 	}
 
 	protected void interrupted() {
