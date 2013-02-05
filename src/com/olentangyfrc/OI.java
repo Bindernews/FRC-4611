@@ -2,7 +2,9 @@
 package com.olentangyfrc;
 
 import com.olentangyfrc.commands.AimAndShootCommand;
+import com.olentangyfrc.commands.ManualShoot;
 import com.olentangyfrc.commands.ReverseDriveCommand;
+import com.olentangyfrc.commands.ShootCommand;
 import com.olentangyfrc.utils.NamedMultiButton;
 import com.sun.squawk.util.MathUtils;
 import edu.wpi.first.wpilibj.Joystick;
@@ -35,7 +37,7 @@ public class OI {
 		btnReverseDrive.add(n64, 3);
 		
 		btnFire = new NamedMultiButton("FireButton", 10);
-		btnFire.whenActive(new AimAndShootCommand());
+		btnFire.whenActive(new ManualShoot());
 		btnFire.add(leftJoy, RobotMap.aim_fireBtn1);
 		btnFire.add(rightJoy, 1);
 		btnFire.add(n64, 2);
@@ -51,6 +53,9 @@ public class OI {
 		// Initialzie the SmartDashboard
 		SmartDashboard.putData(btnReverseDrive);
 		SmartDashboard.putData(btnFire);
+		SmartDashboard.putData(new ShootCommand());
+		SmartDashboard.putData(new ReverseDriveCommand());
+		SmartDashboard.putData(new AimAndShootCommand());
 	}
 	
 	private static final double JOYSTICK_DEADZONE = 0.05;

@@ -4,6 +4,9 @@
  */
 package com.olentangyfrc.commands;
 
+import com.olentangyfrc.OI;
+import com.olentangyfrc.Ozone;
+
 /**
  *
  * @author Bindernews
@@ -18,16 +21,24 @@ public class ManualAimCommand extends DrivingCommand {
 	}
 
 	protected void execute() {
+		driveTrain.turn(OI.getN64H());
 	}
 
 	protected boolean isFinished() {
 		return false;
 	}
+	
+	protected void onLockGained() {
+		Ozone.isDriveControl = false;
+	}
 
 	protected void end() {
+		Ozone.isDriveControl = true;
 	}
 
 	protected void interrupted() {
 	}
+	
+	
 	
 }

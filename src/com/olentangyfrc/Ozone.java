@@ -6,17 +6,21 @@
 /*----------------------------------------------------------------------------*/
 package com.olentangyfrc;
 
+import com.olentangyfrc.commands.AimAndShootCommand;
 import com.olentangyfrc.commands.AimHorizontal;
 import com.olentangyfrc.commands.CommandBase;
 import com.olentangyfrc.commands.DriveWithArrows;
 import com.olentangyfrc.commands.DriveWithJoysticks;
 import com.olentangyfrc.commands.ManualAimCommand;
+import com.olentangyfrc.commands.ReverseDriveCommand;
+import com.olentangyfrc.commands.ShootCommand;
 import com.olentangyfrc.commands.autonomous.AutonomousCommand;
 //import com.olentangyfrc.commands.ExampleCommand;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -31,6 +35,7 @@ public class Ozone extends IterativeRobot {
 	public static DriveWithArrows driveWithArrows;
 	public static AimHorizontal aimHorizontal;
 	public static ManualAimCommand manualAim;
+	public static boolean isDriveControl = true;
 	
 	Command autonomousCommand;
 	
@@ -40,13 +45,15 @@ public class Ozone extends IterativeRobot {
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
+		// Initialize all subsystems
+		CommandBase.init();
+		
+		// Initialize commands, buttons, Joysticks, etc.
+		// Must be run in robotInit and after CommandBase.init
 		OI.init();
 		
 		// instantiate the command used for the autonomous period
 		autonomousCommand = new AutonomousCommand();
-
-		// Initialize all subsystems
-		CommandBase.init();
 	}
 	
 	public void disabledInit() {

@@ -18,6 +18,7 @@ public abstract class DrivingCommand extends CommandBase {
 	public final SimpleCommand driveLockCommand = new SimpleCommand() {
 		protected void initialize() {
 			driveLock();
+			onLockGained();
 		}
 	};
 	
@@ -43,4 +44,5 @@ public abstract class DrivingCommand extends CommandBase {
 		return enabledCommand == this;
 	}
 	
+	protected void onLockGained() {}
 }

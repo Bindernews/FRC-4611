@@ -45,7 +45,7 @@ public class ShootCommand extends CommandBase implements ITableListener {
 	}
 
 	protected void execute() {
-		shooter.windUp();
+		shooter.shooterOn();
 		if (runTime() >= FEED_DELAY && runTime() <= FEED_TIME) {
 			shooter.feederOn();
 		} else {
@@ -58,12 +58,12 @@ public class ShootCommand extends CommandBase implements ITableListener {
 	}
 
 	protected void end() {
-		shooter.windDown();
+		shooter.shooterOff();
 	}
 
 	protected void interrupted() {
 		wasInterrupted = true;
-		shooter.windDown();
+		shooter.shooterOff();
 	}
 
 	public void valueChanged(ITable table, String name, Object o, boolean bln) {

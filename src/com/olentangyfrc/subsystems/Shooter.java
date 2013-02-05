@@ -18,8 +18,8 @@ import edu.wpi.first.wpilibj.tables.ITableListener;
  */
 public class Shooter extends Subsystem implements ITableListener {
 	
-	private static double SHOOTER_SPEED = 10.0;
-	private static double FEEDER_SPEED = 10.0;
+	private static double SHOOTER_SPEED = 1.0;
+	private static double FEEDER_SPEED = 1.0;
 	private Victor shooterMotor;
 	private Victor feeder;
 	
@@ -33,11 +33,11 @@ public class Shooter extends Subsystem implements ITableListener {
 		DashUtils.addListener("FEEDER_SPEED", this);
 	}
 	
-	public void windUp() {
+	public void shooterOn() {
 		shooterMotor.set(SHOOTER_SPEED);
 	}
 	
-	public void windDown() {
+	public void shooterOff() {
 		shooterMotor.set(0.0);
 	}
 	

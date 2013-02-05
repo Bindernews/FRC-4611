@@ -5,6 +5,7 @@
 package com.olentangyfrc.commands;
 
 import com.olentangyfrc.OI;
+import com.olentangyfrc.Ozone;
 
 /**
  *
@@ -34,6 +35,10 @@ public class DriveWithJoysticks extends DrivingCommand {
 
 	protected void interrupted() {
 		end();
+	}
+	
+	protected void onLockGained() {
+		Ozone.isDriveControl = true;
 	}
 	
 }
