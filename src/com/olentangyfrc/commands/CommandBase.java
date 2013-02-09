@@ -5,6 +5,7 @@ import com.olentangyfrc.subsystems.Elevator;
 import com.olentangyfrc.subsystems.DriveTrain;
 import com.olentangyfrc.subsystems.Shooter;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -22,6 +23,8 @@ public abstract class CommandBase extends Command {
 	public static Elevator elevatorSub = new Elevator();
 	public static DriveTrain driveTrain = new DriveTrain();
 	public static Shooter shooter = new Shooter();
+	public static NetworkTable ozone = NetworkTable.getTable("RoboRealm");
+	public static NetworkTable dashboard = NetworkTable.getTable("SmartDashboard");
 
 	public static void init() {
 		// This MUST be here. If the OI creates Commands (which it very likely

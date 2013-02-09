@@ -27,8 +27,8 @@ public class AimHorizontal extends DrivingCommand implements ITableListener {
 	}
 
 	protected void initialize() {
-		SmartDashboard.putNumber("turnSpeedH", turnSpeed);
-		DashUtils.addListener("turnSpeedH", this);
+		dashboard.putNumber("turnHSpeed", turnSpeed);
+		dashboard.addTableListener("turnHSpeed", this, true);
 		
 		SmartDashboard.putData(this);
 		isEnabled = true;
@@ -36,7 +36,7 @@ public class AimHorizontal extends DrivingCommand implements ITableListener {
 
 	protected void execute() {
 		if (!driveEnabled()) { return; }
-		turnAmount = SmartDashboard.getNumber(webcamHTurn);
+		turnAmount = ozone.getNumber(webcamHTurn);
 		driveTrain.tankDrive(turnSpeed * turnAmount, turnSpeed * -turnAmount);
 	}
 
