@@ -23,8 +23,8 @@ public class DriveWithArrows extends DrivingCommand {
 
 	protected void execute() {
 		if (!driveEnabled()) { return; }
-		driveTrain.tankDrive(OI.getArrowUD(), OI.getArrowUD());
-		driveTrain.turn(OI.getArrowLR());
+		driveTrain.tankDrive(oi.getArrowUD(), oi.getArrowUD());
+		driveTrain.turn(oi.getArrowLR());
 	}
 
 	protected boolean isFinished() {

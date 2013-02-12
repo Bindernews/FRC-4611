@@ -48,10 +48,6 @@ public class Ozone extends IterativeRobot {
 		// Initialize all subsystems
 		CommandBase.init();
 		
-		// Initialize commands, buttons, Joysticks, etc.
-		// Must be run in robotInit and after CommandBase.init
-		OI.init();
-		
 		// instantiate the command used for the autonomous period
 		autonomousCommand = new AutonomousCommand();
 	}

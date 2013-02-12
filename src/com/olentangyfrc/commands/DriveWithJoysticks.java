@@ -22,7 +22,7 @@ public class DriveWithJoysticks extends DrivingCommand {
 
 	protected void execute() {
 		if (!driveEnabled()) { return; }
-		driveTrain.tankDrive(OI.getLeftJoy(), OI.getRightJoy());
+		driveTrain.tankDrive(oi.getLeftJoyY(), oi.getRightJoyY());
 	}
 
 	protected boolean isFinished() {

@@ -21,7 +21,7 @@ public class ManualAimCommand extends DrivingCommand {
 	}
 
 	protected void execute() {
-		driveTrain.turn(OI.getN64H());
+		driveTrain.turn(oi.getN64H());
 	}
 
 	protected boolean isFinished() {

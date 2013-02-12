@@ -5,7 +5,6 @@
 package com.olentangyfrc.subsystems;
 
 import com.olentangyfrc.RobotMap;
-import com.olentangyfrc.utils.DashUtils;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -29,8 +28,8 @@ public class Shooter extends Subsystem implements ITableListener {
 		feeder = new Victor(RobotMap.feederMotor);
 		SmartDashboard.putNumber("SHOOTER_SPEED", SHOOTER_SPEED);
 		SmartDashboard.putNumber("FEEDER_SPEED", FEEDER_SPEED);
-		DashUtils.addListener("SHOOTER_SPEED", this);
-		DashUtils.addListener("FEEDER_SPEED", this);
+		//DashUtils.addListener("SHOOTER_SPEED", this);
+		//DashUtils.addListener("FEEDER_SPEED", this);
 	}
 	
 	public void shooterOn() {

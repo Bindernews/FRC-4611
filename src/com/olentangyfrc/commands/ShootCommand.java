@@ -4,7 +4,6 @@
  */
 package com.olentangyfrc.commands;
 
-import com.olentangyfrc.utils.DashUtils;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.tables.ITable;
 import edu.wpi.first.wpilibj.tables.ITableListener;
@@ -29,9 +28,9 @@ public class ShootCommand extends CommandBase implements ITableListener {
 		SmartDashboard.putNumber("SHOOT_TIME", SHOOT_TIME);
 		SmartDashboard.putNumber("FEED_DELAY", FEED_DELAY);
 		SmartDashboard.putNumber("FEED_TIME", FEED_TIME);
-		DashUtils.addListener("SHOOT_TIME", this);
-		DashUtils.addListener("FEED_DELAY", this);
-		DashUtils.addListener("FEED_TIME", this);
+		//DashUtils.addListener("SHOOT_TIME", this);
+		//DashUtils.addListener("FEED_DELAY", this);
+		//DashUtils.addListener("FEED_TIME", this);
 	}
 
 	protected void initialize() {

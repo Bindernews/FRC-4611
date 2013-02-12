@@ -4,8 +4,6 @@
  */
 package com.olentangyfrc.commands;
 
-import com.olentangyfrc.utils.DashUtils;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.tables.ITable;
 import edu.wpi.first.wpilibj.tables.ITableListener;
@@ -27,7 +25,7 @@ public class AimVertical extends CommandBase implements ITableListener {
 
 	protected void initialize() {
 		SmartDashboard.putNumber("turnSpeedV", turnSpeed);
-		DashUtils.addListener("turnSpeedV", this);
+		//DashUtils.addListener("turnSpeedV", this);
 		
 		SmartDashboard.putNumber(turnAmountName, turnAmount);
 	}

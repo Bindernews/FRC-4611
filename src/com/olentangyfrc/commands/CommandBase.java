@@ -25,8 +25,11 @@ public abstract class CommandBase extends Command {
 	public static Shooter shooter = new Shooter();
 	public static NetworkTable ozone = NetworkTable.getTable("RoboRealm");
 	public static NetworkTable dashboard = NetworkTable.getTable("SmartDashboard");
+	
+	public static OI oi;
 
 	public static void init() {
+		oi = new OI();
 		// This MUST be here. If the OI creates Commands (which it very likely
 		// will), constructing it during the construction of CommandBase (from
 		// which commands extend), subsystems are not guaranteed to be

@@ -16,19 +16,19 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class OI {
 	
-	public static Joystick
+	public Joystick
 			leftJoy = new Joystick(RobotMap.leftJoystick),
 			rightJoy = new Joystick(RobotMap.rightJoystick),
 			n64 = new Joystick(RobotMap.N64Joystick);
 	
-	public static NamedMultiButton
+	public NamedMultiButton
 			btnGiveAimControl,
 			btnGiveJoysControl,
 			btnFire,
 			btnReverseDrive;
 	
-	public static void init() {
-		
+	public OI() {
+
 		// Initialize buttons
 		btnReverseDrive = new NamedMultiButton("ReverseButton", 10);
 		btnReverseDrive.whenActive(new ReverseDriveCommand());
@@ -58,38 +58,67 @@ public class OI {
 		SmartDashboard.putData(new AimAndShootCommand());
 	}
 	
+	public static double [] MainCoeffs = {
+		123,
+		123,
+		0,
+		0,
+		0,
+		0,
+	};
+	public static double [] SubCoeffs = {
+		4.055,
+		-9.18,
+		6,
+	};
+	
 	private static final double JOYSTICK_DEADZONE = 0.05;
-	public static double speedf(double spd) {
-		double sign = spd / Math.abs(spd);
-		double val = Math.abs(MathUtils.pow(spd, 1.5));
-		if (val < JOYSTICK_DEADZONE) {
+	public static double speedf(double speed) {
+		double aspeed = Math.abs(speed);
+		double value;
+		if (aspeed < JOYSTICK_DEADZONE) {
 			return 0;
 		}
-		return val * sign;
+		else if (aspeed > .95) {
+			value = 1;
+		}
+		else if (aspeed >= .85 && aspeed <= .95) {
+			value = SubCoeffs[2] * MathUtils.pow(aspeed, 2)
+					+ SubCoeffs[1] * MathUtils.pow(aspeed, 1)
+					+ SubCoeffs[0];
+		} else {
+			value = MainCoeffs[5] * MathUtils.pow(aspeed, 5)
+					+ MainCoeffs[4] * MathUtils.pow(aspeed, 4)
+					+ MainCoeffs[3] * MathUtils.pow(aspeed, 3)
+					+ MainCoeffs[2] * MathUtils.pow(aspeed, 2)
+					+ MainCoeffs[1] * aspeed
+					+ MainCoeffs[0];
+		}
+		value *= speed / aspeed; // re-add sign
+		return value;
 	}
 	
-	public static double getLeftJoy() {
+	public double getLeftJoyY() {
 		return speedf(leftJoy.getY());
 	}
-	public static double getRightJoy() {
+	public double getRightJoyY() {
 		return speedf(rightJoy.getY());
 	}
 	
-	public static double getN64H() {
-		return speedf(n64.getX());
+	public double getN64H() {
+		return n64.getX();
 	}
-	public static double getN64V() {
-		return speedf(n64.getY());
+	public double getN64V() {
+		return n64.getY();
 	}
 	
-	public static double getArrowLR() {
+	public double getArrowLR() {
 		return speedf(n64.getRawAxis(RobotMap.ArrowAxisLR));
 	}
-	public static double getArrowUD() {
+	public double getArrowUD() {
 		return speedf(n64.getRawAxis(RobotMap.ArrowAxisUD));
 	}
 	
-	private OI() {}
 	
     //// CREATING BUTTONS
     // One type of button is a joystick button which is any button on a joystick.
