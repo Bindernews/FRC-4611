@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir=".." name="O3zonecmd-IDE">
+    <property file="${user.home}/.sunspotfrc.properties"/>
+    <property file="build.properties"/>
+    <property file="${sunspot.home}/default.properties"/>
+    <!-- TODO: edit the following target according to your needs -->
+    <!-- (more info: http://www.netbeans.org/kb/articles/freeform-config.html#compilesingle) -->
+    <target name="compile-selected-files-in-src">
+        <fail unless="files">Must set property 'files'</fail>
+        <mkdir dir="build"/>
+        <javac destdir="build" includes="${files}" source="1.4" srcdir="src">
+            <classpath path="${sunspot.home}\lib\wpilibj.jar;${sunspot.home}\lib\networktables-crio.jar"/>
+        </javac>
+    </target>
+    <!-- TODO: edit the following target according to your needs -->
+    <!-- (more info: http://www.netbeans.org/kb/articles/freeform-config.html#runsingle) -->
+    <target name="-profile-check">
+        <startprofiler freeform="true"/>
+    </target>
+    <target depends="-profile-check" if="profiler.configured" name="profile-selected-file-in-src">
+        <fail unless="profile.class">Must set property 'profile.class'</fail>
+        <path id="cp">
+            <pathelement path="${sunspot.home}\lib\wpilibj.jar;${sunspot.home}\lib\networktables-crio.jar"/>
+            <pathelement location="build"/>
+        </path>
+        <java classname="${profile.class}" fork="true">
+            <classpath refid="cp"/>
+            <jvmarg line="${agent.jvmargs}"/>
+        </java>
+    </target>
+    <!-- TODO: edit the following target according to your needs -->
+    <!-- (more info: http://www.netbeans.org/kb/articles/freeform-config.html#compilesingle) -->
+    <target name="compile-selected-files-in-src">
+        <fail unless="files">Must set property 'files'</fail>
+        <mkdir dir="build"/>
+        <javac destdir="build" includes="${files}" source="1.4" srcdir="src">
+            <classpath path="${sunspot.home}\lib\wpilibj.jar;${sunspot.home}\lib\networktables-crio.jar"/>
+        </javac>
+    </target>
+</project>

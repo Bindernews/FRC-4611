@@ -1,0 +1,202 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>package edu.wpi.first.wpilibj.templates;<a name="line.1"></a>
+<span class="sourceLineNo">002</span><a name="line.2"></a>
+<span class="sourceLineNo">003</span>import edu.wpi.first.wpilibj.Joystick;<a name="line.3"></a>
+<span class="sourceLineNo">004</span>import edu.wpi.first.wpilibj.buttons.Button;<a name="line.4"></a>
+<span class="sourceLineNo">005</span>import edu.wpi.first.wpilibj.buttons.JoystickButton;<a name="line.5"></a>
+<span class="sourceLineNo">006</span>import edu.wpi.first.wpilibj.templates.commands.AutoMode;<a name="line.6"></a>
+<span class="sourceLineNo">007</span>import edu.wpi.first.wpilibj.templates.commands.CommandBase; <a name="line.7"></a>
+<span class="sourceLineNo">008</span>import edu.wpi.first.wpilibj.templates.commands.DriveToDistance;<a name="line.8"></a>
+<span class="sourceLineNo">009</span>import edu.wpi.first.wpilibj.templates.commands.DriveWithJoysticks;<a name="line.9"></a>
+<span class="sourceLineNo">010</span>import edu.wpi.first.wpilibj.templates.commands.FeederPush;<a name="line.10"></a>
+<span class="sourceLineNo">011</span>import edu.wpi.first.wpilibj.templates.commands.FeederRetract;<a name="line.11"></a>
+<span class="sourceLineNo">012</span>import edu.wpi.first.wpilibj.templates.commands.FeederStop;<a name="line.12"></a>
+<span class="sourceLineNo">013</span>import edu.wpi.first.wpilibj.templates.commands.ShooterMotorForward;<a name="line.13"></a>
+<span class="sourceLineNo">014</span>import edu.wpi.first.wpilibj.templates.commands.ShooterMotorReverse;<a name="line.14"></a>
+<span class="sourceLineNo">015</span>import edu.wpi.first.wpilibj.templates.commands.ShooterMotorStop;<a name="line.15"></a>
+<span class="sourceLineNo">016</span>import edu.wpi.first.wpilibj.templates.commands.Stow; <a name="line.16"></a>
+<span class="sourceLineNo">017</span>import edu.wpi.first.wpilibj.templates.commands.VerticalAimDown; <a name="line.17"></a>
+<span class="sourceLineNo">018</span>import edu.wpi.first.wpilibj.templates.commands.VerticalAimStop; <a name="line.18"></a>
+<span class="sourceLineNo">019</span>import edu.wpi.first.wpilibj.templates.commands.VerticalAimUp;  <a name="line.19"></a>
+<span class="sourceLineNo">020</span><a name="line.20"></a>
+<span class="sourceLineNo">021</span><a name="line.21"></a>
+<span class="sourceLineNo">022</span>//import edu.wpi.first.wpilibj.templates.commands.Grab;<a name="line.22"></a>
+<span class="sourceLineNo">023</span>//import edu.wpi.first.wpilibj.templates.commands.PrepareToGrab;<a name="line.23"></a>
+<span class="sourceLineNo">024</span>//import edu.wpi.first.wpilibj.templates.commands.PlaceSoda;<a name="line.24"></a>
+<span class="sourceLineNo">025</span>//import edu.wpi.first.wpilibj.templates.commands.SodaDelivery;<a name="line.25"></a>
+<span class="sourceLineNo">026</span>//import edu.wpi.first.wpilibj.templates.commands.Stow;<a name="line.26"></a>
+<span class="sourceLineNo">027</span><a name="line.27"></a>
+<span class="sourceLineNo">028</span>/**<a name="line.28"></a>
+<span class="sourceLineNo">029</span> * &lt;p&gt;The operator interface class ties the commands that have been implemented<a name="line.29"></a>
+<span class="sourceLineNo">030</span> * to the physical controls of the user. This allows you to bind the same<a name="line.30"></a>
+<span class="sourceLineNo">031</span> * command that executes autonomous to a button. It also reveal the joystick as<a name="line.31"></a>
+<span class="sourceLineNo">032</span> * used by the DriveWithJoysticks command.&lt;/p&gt;<a name="line.32"></a>
+<span class="sourceLineNo">033</span> * <a name="line.33"></a>
+<span class="sourceLineNo">034</span> * @author Alex Henning<a name="line.34"></a>
+<span class="sourceLineNo">035</span> */<a name="line.35"></a>
+<span class="sourceLineNo">036</span>public class OI {<a name="line.36"></a>
+<span class="sourceLineNo">037</span>    // Create the joystick and of the 8 buttons on it<a name="line.37"></a>
+<span class="sourceLineNo">038</span>    Joystick leftJoy = new Joystick(1);<a name="line.38"></a>
+<span class="sourceLineNo">039</span>    Button leftbutton1 = new JoystickButton(leftJoy, 1),<a name="line.39"></a>
+<span class="sourceLineNo">040</span>            leftbutton2 = new JoystickButton(leftJoy, 2),<a name="line.40"></a>
+<span class="sourceLineNo">041</span>            leftbutton3 = new JoystickButton(leftJoy, 3),<a name="line.41"></a>
+<span class="sourceLineNo">042</span>            leftbutton4 = new JoystickButton(leftJoy, 4),<a name="line.42"></a>
+<span class="sourceLineNo">043</span>            leftbutton5 = new JoystickButton(leftJoy, 5),<a name="line.43"></a>
+<span class="sourceLineNo">044</span>            leftbutton6 = new JoystickButton(leftJoy, 6),<a name="line.44"></a>
+<span class="sourceLineNo">045</span>            leftbutton7 = new JoystickButton(leftJoy, 7),<a name="line.45"></a>
+<span class="sourceLineNo">046</span>            leftbutton8 = new JoystickButton(leftJoy, 8);<a name="line.46"></a>
+<span class="sourceLineNo">047</span>    Joystick rightJoy = new Joystick(2);<a name="line.47"></a>
+<span class="sourceLineNo">048</span>    Button rightbutton1 = new JoystickButton(rightJoy, 1),<a name="line.48"></a>
+<span class="sourceLineNo">049</span>            rightbutton2 = new JoystickButton(rightJoy, 2),<a name="line.49"></a>
+<span class="sourceLineNo">050</span>            rightbutton3 = new JoystickButton(rightJoy, 3),<a name="line.50"></a>
+<span class="sourceLineNo">051</span>            rightbutton4 = new JoystickButton(rightJoy, 4),<a name="line.51"></a>
+<span class="sourceLineNo">052</span>            rightbutton5 = new JoystickButton(rightJoy, 5),<a name="line.52"></a>
+<span class="sourceLineNo">053</span>            rightbutton6 = new JoystickButton(rightJoy, 6),<a name="line.53"></a>
+<span class="sourceLineNo">054</span>            rightbutton7 = new JoystickButton(rightJoy, 7),<a name="line.54"></a>
+<span class="sourceLineNo">055</span>            rightbutton8 = new JoystickButton(rightJoy, 8);<a name="line.55"></a>
+<span class="sourceLineNo">056</span>        Joystick shooterJoy = new Joystick(3);<a name="line.56"></a>
+<span class="sourceLineNo">057</span>    Button shooterbutton1 = new JoystickButton(shooterJoy, 1),<a name="line.57"></a>
+<span class="sourceLineNo">058</span>            shooterbutton2 = new JoystickButton(shooterJoy, 2),<a name="line.58"></a>
+<span class="sourceLineNo">059</span>            shooterbutton3 = new JoystickButton(shooterJoy, 3),<a name="line.59"></a>
+<span class="sourceLineNo">060</span>            shooterbutton4 = new JoystickButton(shooterJoy, 4),<a name="line.60"></a>
+<span class="sourceLineNo">061</span>            shooterbutton5 = new JoystickButton(shooterJoy, 5),<a name="line.61"></a>
+<span class="sourceLineNo">062</span>            shooterbutton6 = new JoystickButton(shooterJoy, 6),<a name="line.62"></a>
+<span class="sourceLineNo">063</span>            shooterbutton7 = new JoystickButton(shooterJoy, 7),<a name="line.63"></a>
+<span class="sourceLineNo">064</span>            shooterbutton8 = new JoystickButton(shooterJoy, 8); <a name="line.64"></a>
+<span class="sourceLineNo">065</span>    /**<a name="line.65"></a>
+<span class="sourceLineNo">066</span>     * Bind the press of each button to a specific command or command group.<a name="line.66"></a>
+<span class="sourceLineNo">067</span>     */<a name="line.67"></a>
+<span class="sourceLineNo">068</span>    public OI() {<a name="line.68"></a>
+<span class="sourceLineNo">069</span>                // need to map buttons to commands<a name="line.69"></a>
+<span class="sourceLineNo">070</span>                leftbutton1.whenPressed(new Stow());<a name="line.70"></a>
+<span class="sourceLineNo">071</span>        leftbutton2.whenPressed(new Stow());<a name="line.71"></a>
+<span class="sourceLineNo">072</span>        leftbutton3.whenPressed(new Stow());<a name="line.72"></a>
+<span class="sourceLineNo">073</span>        leftbutton4.whenPressed(new Stow());<a name="line.73"></a>
+<span class="sourceLineNo">074</span>        leftbutton5.whenPressed(new Stow());<a name="line.74"></a>
+<span class="sourceLineNo">075</span>        leftbutton6.whenPressed(new Stow());<a name="line.75"></a>
+<span class="sourceLineNo">076</span>                leftbutton7.whenPressed(new Stow());<a name="line.76"></a>
+<span class="sourceLineNo">077</span>                leftbutton8.whenPressed(new Stow());<a name="line.77"></a>
+<span class="sourceLineNo">078</span>                <a name="line.78"></a>
+<span class="sourceLineNo">079</span>                rightbutton1.whenPressed(new Stow());<a name="line.79"></a>
+<span class="sourceLineNo">080</span>        rightbutton2.whenPressed(new Stow());<a name="line.80"></a>
+<span class="sourceLineNo">081</span>        rightbutton3.whenPressed(new Stow());<a name="line.81"></a>
+<span class="sourceLineNo">082</span>        rightbutton4.whenPressed(new Stow());<a name="line.82"></a>
+<span class="sourceLineNo">083</span>        rightbutton5.whenPressed(new Stow());<a name="line.83"></a>
+<span class="sourceLineNo">084</span>        rightbutton6.whenPressed(new Stow());<a name="line.84"></a>
+<span class="sourceLineNo">085</span>                rightbutton7.whenPressed(new Stow());<a name="line.85"></a>
+<span class="sourceLineNo">086</span>                rightbutton8.whenPressed(new Stow());<a name="line.86"></a>
+<span class="sourceLineNo">087</span>                <a name="line.87"></a>
+<span class="sourceLineNo">088</span>                shooterbutton1.whenPressed(new Stow());<a name="line.88"></a>
+<span class="sourceLineNo">089</span>        shooterbutton2.whenPressed(new Stow());<a name="line.89"></a>
+<span class="sourceLineNo">090</span>        shooterbutton3.whenPressed(new Stow());<a name="line.90"></a>
+<span class="sourceLineNo">091</span>        shooterbutton4.whenPressed(new Stow());<a name="line.91"></a>
+<span class="sourceLineNo">092</span>        shooterbutton5.whenPressed(new Stow());<a name="line.92"></a>
+<span class="sourceLineNo">093</span>        shooterbutton6.whenPressed(new Stow());<a name="line.93"></a>
+<span class="sourceLineNo">094</span>                shooterbutton7.whenPressed(new Stow());<a name="line.94"></a>
+<span class="sourceLineNo">095</span>        //button1.whenPressed(new PrepareToGrab());<a name="line.95"></a>
+<span class="sourceLineNo">096</span>        //button2.whenPressed(new Grab());<a name="line.96"></a>
+<span class="sourceLineNo">097</span>        //button3.whenPressed(new DriveToDistance(0.11));<a name="line.97"></a>
+<span class="sourceLineNo">098</span>        //button4.whenPressed(new PlaceSoda());<a name="line.98"></a>
+<span class="sourceLineNo">099</span>        //button6.whenPressed(new DriveToDistance(0.2));<a name="line.99"></a>
+<span class="sourceLineNo">100</span>        //button8.whenPressed(new Stow());<a name="line.100"></a>
+<span class="sourceLineNo">101</span>        <a name="line.101"></a>
+<span class="sourceLineNo">102</span>        //button7.whenPressed(new SodaDelivery());<a name="line.102"></a>
+<span class="sourceLineNo">103</span>    }<a name="line.103"></a>
+<span class="sourceLineNo">104</span>    <a name="line.104"></a>
+<span class="sourceLineNo">105</span>    /**<a name="line.105"></a>
+<span class="sourceLineNo">106</span>     * @return The value of the left joystick.<a name="line.106"></a>
+<span class="sourceLineNo">107</span>     */<a name="line.107"></a>
+<span class="sourceLineNo">108</span>    public double getLeftSpeed() {<a name="line.108"></a>
+<span class="sourceLineNo">109</span>        return leftJoy.getY();<a name="line.109"></a>
+<span class="sourceLineNo">110</span>    }<a name="line.110"></a>
+<span class="sourceLineNo">111</span>    <a name="line.111"></a>
+<span class="sourceLineNo">112</span>    /**<a name="line.112"></a>
+<span class="sourceLineNo">113</span>     * @return The value of the right joystick. Note: this uses raw axis because<a name="line.113"></a>
+<span class="sourceLineNo">114</span>     *         we have a logitech joystick that resembles a PS controller.<a name="line.114"></a>
+<span class="sourceLineNo">115</span>     */<a name="line.115"></a>
+<span class="sourceLineNo">116</span>        <a name="line.116"></a>
+<span class="sourceLineNo">117</span>         public double getRightSpeed() {<a name="line.117"></a>
+<span class="sourceLineNo">118</span>        return rightJoy.getY();<a name="line.118"></a>
+<span class="sourceLineNo">119</span>    }<a name="line.119"></a>
+<span class="sourceLineNo">120</span>   // public double getRightSpeed() {<a name="line.120"></a>
+<span class="sourceLineNo">121</span>    //    return leftJoy.getRawAxis(4);<a name="line.121"></a>
+<span class="sourceLineNo">122</span>   // }<a name="line.122"></a>
+<span class="sourceLineNo">123</span>         public double getVerticalAimSpeed() {<a name="line.123"></a>
+<span class="sourceLineNo">124</span>        return shooterJoy.getY();<a name="line.124"></a>
+<span class="sourceLineNo">125</span>    } <a name="line.125"></a>
+<span class="sourceLineNo">126</span>         public double getHorizontalAimSpeed() {<a name="line.126"></a>
+<span class="sourceLineNo">127</span>        return shooterJoy.getRawAxis(4);<a name="line.127"></a>
+<span class="sourceLineNo">128</span>    }<a name="line.128"></a>
+<span class="sourceLineNo">129</span>}<a name="line.129"></a>
+<span class="sourceLineNo">130</span><a name="line.130"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>
