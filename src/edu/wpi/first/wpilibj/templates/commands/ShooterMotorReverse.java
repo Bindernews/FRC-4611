@@ -1,0 +1,78 @@
+package edu.wpi.first.wpilibj.templates.commands;
+
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.templates.OI;
+import edu.wpi.first.wpilibj.templates.commands.ShooterMotorStop;
+
+/**
+ * <p>Another command that requires the claw. However, this one runs for a set
+ * period of time and then it's finished and stops executing.</p>
+ * 
+ * <p>Recommended next step: {@link SetWristSetpoint}<br/>
+ * Related command: {@link CloseClaw}</p>
+ *
+ * @author Alex Henning
+ */
+public class ShooterMotorReverse extends CommandBase {
+    
+    /**
+     * Initialize the command so that it requires the claw and set the timeout
+     * for 0.8 seconds, limiting runtime.
+     */
+	public double basetime;
+	public boolean finished=false;
+    public ShooterMotorReverse() {
+        requires(shooter);
+        //this.setTimeout(.8);
+    }
+
+    // Called just before this Command runs the first time
+    protected void initialize() 
+	{
+		basetime = Timer.getFPGATimestamp();
+		finished=false;
+    }
+
+    // Called repeatedly when this Command is scheduled to run
+    /**
+     * Tells the claw to open.
+     */
+    protected void execute() {
+		finished=false;
+		if(oi.ShooterReady)
+		{
+			new ShooterMotorStop();
+			double diff = Timer.getFPGATimestamp() - basetime; 
+			if(diff > OI.ShooterStartupTime)
+			{
+				oi.ShooterReady=false;
+				shooter.TurnOnBackward();
+				finished=true;
+			}
+		}  
+		else
+		{
+           shooter.TurnOnBackward();
+		   basetime=Timer.getFPGATimestamp();
+		}
+    }
+
+    // Make this return true when this Command no longer needs to run execute()
+    /**
+     * @return true when it times out, aka after four fifths of a second.
+     */
+    protected boolean isFinished() {
+		
+        return this.isTimedOut();
+    }
+
+    // Called once after isFinished returns true
+    protected void end() {
+
+    }
+
+    // Called when another command which requires one or more of the same
+    // subsystems is scheduled to run
+    protected void interrupted() {
+    }
+}
